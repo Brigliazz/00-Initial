@@ -98,3 +98,21 @@ class CD:
     def __str__(self) -> str: # ToString
         descrizione = [str(brano) for brano in self.brani] # list comprehension    
         return f"CD: {self.titolo} di {self.autore}\n- " + "\n- ".join(descrizione)
+
+if __name__ == "__main__":
+    brano1 = Brano("Bohemian Rhapsody", "Queen", 355)
+    brano2 = Brano("Imagine", "John Lennon", 183)
+    brano3 = Brano("Stairway to Heaven", "Led Zeppelin", 482)
+
+    print(brano1)
+    print(f"E' un brano breve? {brano2.short_song()}")
+
+    cd = CD("Classic Hits", "Vari artisti", [brano1, brano2, brano3])
+    print(cd)
+    print(f"Durata totale: {cd.durata_totale} secondi")
+
+    playlist = Playlist("Miei favoriti")
+    playlist.aggiungi_brano(brano1)
+    playlist.aggiungi_brano(brano2)
+    print(playlist)
+    print(f"Durata playlist: {playlist.durata_totale()} secondi")
