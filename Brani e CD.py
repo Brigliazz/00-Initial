@@ -1,8 +1,4 @@
-"""Questa riportata è una possibile implementazione.
-Non per forza è necessario utilizzare il decorator @property con setter o meno.
-E' possibile semplicemente dichiararli come properità classiche senza decorator come riportato anche negli altri
-esercizi risolti nelle altre cartelle.
-"""
+
 from typing import List, Optional
 
 
@@ -49,3 +45,56 @@ class Brano:
         return f"{self.titolo} - {self.autore} ({self.durata} secondi)"
 
 
+class Playlist:
+    def __init__(self, nome: str) -> None:
+        self.nome = nome
+        self.brani = [] # inizializzare una lista vuota
+
+    def aggiungi_brano(self, brano: Brano) -> None:
+        self.brani.append(brano)
+
+    def durata_totale(self) -> int:
+        return sum(brano.durata for brano in self.brani)
+
+    def __str__(self) -> str:
+        return f"Playlist: {self.nome} ({len(self.brani)} brani)"
+
+
+class CD:
+    def __init__(self, titolo: str, autore: str, brani: Optional[List[Brano]] = None) -> None:
+        self.titolo = titolo
+        self.autore = autore
+        self.brani = brani if brani is not None else []
+
+    def aggiungi_brano(self, brano: Brano) -> None: # la funzione non ritorna nulla
+        self.brani.append(brano)
+
+    @property
+    def durata_totale(self) -> int:
+        totalDuration = 0
+        for brano in self.brani:
+            totalDuration += brano.durata
+        return totalDuration
+        # return sum(brano.durata for brano in self.brani)
+
+    def filtra_brani_per_autore(self, autore: str) -> List[Brano]:
+        newList = []
+        for brano in self.brani:
+            if autore == brano.autore:
+                newList.append(brano)
+        return newList
+        # return [brano for brano in self.brani if autore == brano.autore]
+
+    def copia_brani(self) -> List[str]:
+        # newBrani = []
+        # for brano in self.brani:
+        #     newBrani.append(brano)
+        # return newBrani
+        # [] -> creano la lista
+        # il ciclo rimane uguale
+        # l'operazione o ciò che voglio allegare alla lista lo defin
+        return [str(brano) for brano in self.brani] # cast a stringa nel caso in cui il titolo di una canzone sia un numero es "47"
+    
+    def __str__(self) -> str: # ToString
+        descrizione = [str(brano) for brano in self.brani] # list comprehension    
+        return f"CD: {self.titolo} di {self.autore}\n- " + "\n- ".join(descrizione)
